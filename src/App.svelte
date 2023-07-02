@@ -1,13 +1,13 @@
 <!-- @format -->
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { redirectToAuthCodeFlow } from './redirectToAuthCodeFlow';
-  import { getAccessToken } from './getAccessToken';
-  import { getCurrentUserProfile } from './getCurrentUserProfile';
-  import { getCurrentUserPlaylists, type GetCurrentUserPlaylistsResponse } from './getCurrentUserPlaylists';
-  import { getPlaylistItems } from './getPlaylistItems';
-  import { createPlaylist } from './createPlaylist';
-  import { updatePlaylistItems } from './updatePlaylistItems';
+  import { redirectToAuthCodeFlow } from './api/redirectToAuthCodeFlow';
+  import { getAccessToken } from './api/getAccessToken';
+  import { getCurrentUserProfile } from './api/getCurrentUserProfile';
+  import { getCurrentUserPlaylists, type GetCurrentUserPlaylistsResponse } from './api/getCurrentUserPlaylists';
+  import { getPlaylistItems } from './api/getPlaylistItems';
+  import { createPlaylist } from './api/createPlaylist';
+  import { updatePlaylistItems } from './api/updatePlaylistItems';
 
   const CLIENT_ID = import.meta.env.VITE_CLIENT_ID;
 
