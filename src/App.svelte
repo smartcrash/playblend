@@ -60,26 +60,22 @@
 
     const formData = new FormData(target as HTMLFormElement);
     const name = String(formData.get('name'));
-    const selectedPlaylists = formData.getAll('playlist_ids').map(String);
-
-    const data: Record<string, number> = {};
 
     if (!name) {
       error = 'Please enter the name of the Playlist.';
       return;
     }
 
+    const data: Record<string, number> = [...formData.entries()].reduce((previousValue, [key, value]) => {
+      if (key !== 'name') {
+        const numberValue = Number(value);
+        if (numberValue > 0) previousValue[key] = numberValue;
+      }
+      return previousValue;
+    }, {});
+
     // TODO: Validate selected Playlist
     // TODO: Validate playlsit amount
-
-    for (const playlistId of selectedPlaylists) {
-      const inputValue = formData.get(playlistId) as string | null;
-
-      if (inputValue) {
-        const value = Number(inputValue);
-        if (value > 0) data[playlistId] = value;
-      }
-    }
 
     const trackList = await generatePlaylist(data);
     const uris = trackList.map((id) => `spotify:track:${id}`).join(',');
@@ -112,10 +108,6 @@
       <div class="flex-1 overflow-scroll pr-4 divide-y">
         {#each playlists.items as item}
           <label class="flex space-x-4 align-middle justify-center cursor-pointer select-none mb-4 pt-4">
-            <div class="flex self-center">
-              <input type="checkbox" value={item.id} name="playlist_ids" />
-            </div>
-
             <div class="shrink-0">
               {#if item.images[0]}
                 <img src={item.images[0].url} alt={item.name} class="w-20 h-auto rounded-xl pointer-events-none" />
