@@ -11,7 +11,7 @@ export async function createPlaylist(
   userId: string,
   bodyParams: { name: string, public?: boolean, collaborative?: boolean, description?: string }
 ): Promise<CreatePlaylistResponse> {
-  const result = await fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
+  const response = await fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -20,5 +20,5 @@ export async function createPlaylist(
     body: JSON.stringify(bodyParams)
   });
 
-  return result.json();
+  return response.json();
 }

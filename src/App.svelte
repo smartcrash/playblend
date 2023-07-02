@@ -86,12 +86,13 @@
 
     try {
       const { id: userId } = await getCurrentUserProfile(token);
-      const { id: createdId } = await createPlaylist(token, userId, { name, collaborative: true });
+      const { id: createdId } = await createPlaylist(token, userId, { name, collaborative: false, public: true });
 
       await updatePlaylistItems(token, createdId, uris);
 
-      console.log(userId, trackList, createdId);
+      (target as HTMLFormElement).reset();
     } catch (error) {
+      console.log(error);
       console.log((error as any).response);
     }
   }
