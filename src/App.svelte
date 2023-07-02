@@ -8,8 +8,7 @@
   import { getPlaylistItems } from './api/getPlaylistItems';
   import { createPlaylist } from './api/createPlaylist';
   import { updatePlaylistItems } from './api/updatePlaylistItems';
-
-  const CLIENT_ID = import.meta.env.VITE_CLIENT_ID;
+  import { CLIENT_ID } from './constants';
 
   const token = localStorage.getItem('token');
 
