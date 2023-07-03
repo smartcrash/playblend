@@ -29,7 +29,7 @@
       } else {
         const accessToken = await getAccessToken(CLIENT_ID, code);
         localStorage.setItem('token', accessToken);
-        window.history.pushState('', document.title, document.location.href.split('?')[0]);
+        window.location.href = document.location.href.split('?')[0];
       }
 
       return;
