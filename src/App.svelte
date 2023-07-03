@@ -16,7 +16,7 @@
 
   let loading = true;
   let error: string | null = null;
-  let profile = {};
+  let userId: string | null = null;
   let playlists: GetCurrentUserPlaylistsResponse = null;
 
   onMount(async () => {
@@ -31,9 +31,19 @@
         localStorage.setItem('token', accessToken);
         window.history.pushState('', document.title, document.location.href.split('?')[0]);
       }
+
+      return;
     }
 
-    profile = await getCurrentUserProfile(token);
+    const profile = await getCurrentUserProfile(token);
+
+    if ('error' in profile) {
+      localStorage.removeItem('token');
+      window.location.reload();
+      return;
+    }
+
+    userId = profile.id;
     playlists = await getCurrentUserPlaylists(token);
     loading = false;
   });
@@ -80,7 +90,6 @@
     const uris = trackList.map((id) => `spotify:track:${id}`).join(',');
 
     try {
-      const { id: userId } = await getCurrentUserProfile(token);
       const { id: createdId } = await createPlaylist(token, userId, { name, collaborative: false, public: true });
 
       await updatePlaylistItems(token, createdId, uris);

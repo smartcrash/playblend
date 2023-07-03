@@ -1,4 +1,4 @@
-type GetCurrentUserProfile = {
+export type GetCurrentUserProfileResponse = {
   country: string
   display_name: string
   email: string
@@ -23,14 +23,19 @@ type GetCurrentUserProfile = {
   product: string
   type: string
   uri: string
+} | {
+  error: {
+    status: number
+    message: string
+  }
 }
 
 
-export async function getCurrentUserProfile(token: string): Promise<GetCurrentUserProfile> {
-  const result = await fetch("https://api.spotify.com/v1/me", {
+export async function getCurrentUserProfile(token: string): Promise<GetCurrentUserProfileResponse> {
+  const response = await fetch("https://api.spotify.com/v1/me", {
     method: "GET",
     headers: { Authorization: `Bearer ${token}` }
   });
 
-  return result.json();
+  return response.json();
 }
